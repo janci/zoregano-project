@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zoregano-project-ce</artifactId>
+    <groupId>net.janci.zoregano.ce</groupId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Zoregano : Project</name>
+
+    <organization>
+        <name>Ing. Ján Švantner</name>
+        <url>https://www.janci.net</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Ing. Ján Švantner</name>
+            <email>janci@janci.net</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <compiler.source>10</compiler.source>
+        <compiler.target>10</compiler.target>
+        <compiler.release>10</compiler.release>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.dependency.plugin.version>3.1.1</maven.dependency.plugin.version>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>Apache Software License - Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+        <license>
+            <name>Eclipse Public License - Version 1.0</name>
+            <url>http://www.eclipse.org/org/documents/epl-v10.php</url>
+        </license>
+    </licenses>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>../artifacts</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <source>${compiler.source}</source>
+                        <target>${compiler.target}</target>
+                        <release>${compiler.release}</release>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.basedir}/../artifacts/libs</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
+                        <outputDirectory>${project.basedir}/../artifacts</outputDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules>
+        <module>zoregano-api</module>
+    </modules>
+</project>
