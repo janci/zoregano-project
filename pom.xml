@@ -110,5 +110,7 @@
 
     <modules>
         <module>zoregano-api</module>
+        <module>zoregano-core</module>
+        <module>zoregano-concurrent</module>
     </modules>
 </project>
