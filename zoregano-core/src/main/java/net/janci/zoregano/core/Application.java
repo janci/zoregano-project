@@ -12,12 +12,16 @@ import net.janci.zoregano.core.internal.KernelFinder;
 public class Application {
 
 
+    private static Kernel loadedKernel = null;
+
     /**
      * Initialize Zoregano Application.
      *
      * @param args  command line arguments
      */
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new Thread(Application::terminate));
+
         BIOS bios = new BIOSImpl(args);
         bios.loadBIOSModules();
         bios.awaitToStartKernel();
@@ -25,6 +29,9 @@ public class Application {
         try {
             Kernel kernel = new KernelFinder().findKernel();
             kernel.getController().setAsDefaultInstance();
+
+            loadedKernel = kernel;
+
             kernel.init();
             kernel.terminate();
         } catch (FindKernelException e) {
@@ -33,4 +40,11 @@ public class Application {
 
         bios.terminate();
     }
+
+    private static void terminate() {
+        if (loadedKernel != null) {
+            loadedKernel.terminate();
+        }
+    }
+
 }
